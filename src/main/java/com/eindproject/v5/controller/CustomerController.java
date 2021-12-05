@@ -1,5 +1,6 @@
 package com.eindproject.v5.controller;
 
+import com.eindproject.v5.exception.RecordNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class CustomerController {
         try {
             return ResponseEntity.ok(customers.get(id));
         } catch(Exception ex) {
-            return ResponseEntity.badRequest().body("Customer doesn't exist");
+            throw new RecordNotFoundException();
         }
     }
 
