@@ -1,13 +1,21 @@
 package com.eindproject.v5.model;
 
+import javax.persistence.*;
+
+@Entity(name = "Customers")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
+    @Column(length = 80)
     public String firstName;
 
+    @Column(length = 80)
     public String lastName;
 
+    @Column(length = 160)
     public String residency;
 
 
