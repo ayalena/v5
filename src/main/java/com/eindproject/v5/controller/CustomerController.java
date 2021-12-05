@@ -1,6 +1,7 @@
 package com.eindproject.v5.controller;
 
 import com.eindproject.v5.exception.RecordNotFoundException;
+import com.eindproject.v5.model.Customer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +11,18 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
-    private static List<String> customers = new ArrayList<>();
+    private static List<Customer> customers = new ArrayList<>();
 
     @GetMapping("/customers")
-    public ResponseEntity getCustomers() {
-        return ResponseEntity.ok(customers);
+    public ResponseEntity getCustomers(@RequestParam(required = false) String lastName) {
+        if (lastName == null) {
+            return ResponseEntity.ok(customers);
+        } else {
+            return ResponseEntity.ok(customers
+                    .stream()
+                    .filter(customer -> customer.lastName.equalsIgnoreCase(lastName))
+                    .toArray());
+        }
     }
 
     @GetMapping("/customers/{id}")
@@ -27,7 +35,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customers")
-    public ResponseEntity addCustomer(@RequestBody String customer) { //req body om info door te geven
+    public ResponseEntity addCustomer(@RequestBody Customer customer) { //req body om info door te geven
         customers.add(customer);
         return ResponseEntity.ok("Customer added");
     }
@@ -39,7 +47,7 @@ public class CustomerController {
     }
 
     @PutMapping("/customers/{id}")
-    public ResponseEntity updateCustomer(@PathVariable int id, @RequestBody String customer) {
+    public ResponseEntity updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
         customers.set(id, customer);
         return ResponseEntity.ok("Customer updated");
     }
