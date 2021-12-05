@@ -1,17 +1,14 @@
 package com.eindproject.v5.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TestController {
 
-    @GetMapping("/")
-    public static String sayHello() {
-        return "Hello again";
-    }
+//    @GetMapping("/")
+//    public static String sayHello() {
+//        return "Hello again";
+//    }
 
     @GetMapping("/lena")
     public static String sayLena() {
@@ -22,6 +19,17 @@ public class TestController {
     public static String getInfo() {
         return "This is where the info will be";
     }
+
+    @GetMapping("/")
+    public String sayName(@RequestParam(required = false) String name) {
+        if(name == null) {
+            return "Hello!";
+        } else {
+            return "Hello " + name;
+        }
+    }
+
+
 
     private static String[] questions = {
             "Q1",
