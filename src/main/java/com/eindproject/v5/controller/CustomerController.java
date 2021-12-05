@@ -1,5 +1,6 @@
 package com.eindproject.v5.controller;
 
+import com.eindproject.v5.exception.RecordNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,11 @@ public class CustomerController {
 
     @GetMapping("/customers/{id}")
     public ResponseEntity getCustomer(@PathVariable int id) {
-        return ResponseEntity.ok(customers.get(id));
+        try {
+            return ResponseEntity.ok(customers.get(id));
+        } catch(Exception ex) {
+            throw new RecordNotFoundException();
+        }
     }
 
     @PostMapping("/customers")
