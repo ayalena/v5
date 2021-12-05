@@ -18,7 +18,11 @@ public class CustomerController {
 
     @GetMapping("/customers/{id}")
     public ResponseEntity getCustomer(@PathVariable int id) {
-        return ResponseEntity.ok(customers.get(id));
+        try {
+            return ResponseEntity.ok(customers.get(id));
+        } catch(Exception ex) {
+            return ResponseEntity.badRequest().body("Customer doesn't exist");
+        }
     }
 
     @PostMapping("/customers")
